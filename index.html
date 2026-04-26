@@ -1088,7 +1088,7 @@
             color: #22c55e;
             font-weight: 700;
         }
-        
+
         /* ===== UPDATE NOTIFICATION BAR CSS ===== */
         #updateBar.info { 
             background: linear-gradient(90deg, #1e3a5f, #1e40af); 
@@ -1114,7 +1114,7 @@
 </head>
 <body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
 
-        <!-- ═══ UPDATE NOTIFICATION BAR ═══ -->
+    <!-- ═══ UPDATE NOTIFICATION BAR ═══ -->
     <div id="updateBar" class="hidden fixed top-0 left-0 right-0 z-[100] px-4 py-3 text-center text-sm font-semibold transition-all duration-500">
         <div class="max-w-2xl mx-auto flex items-center justify-center gap-2">
             <span id="updateIcon">ℹ️</span>
@@ -1125,7 +1125,7 @@
         </div>
     </div>
     <!-- ═══ END UPDATE NOTIFICATION ═══ -->
-    
+
     <!-- Info Trigger Button -->
     <button id="infoTrigger" class="info-trigger pulse" onclick="toggleInfoPanel()" aria-label="Informasi Website">
         <i class="fas fa-info"></i>
@@ -1441,7 +1441,7 @@
         
         const API_TIKTOK = 'https://www.tikwm.com/api/';
         const ADMIN_PASSWORD = 'nabil123'; // Ganti password ini!
-        
+
         // ===== UPDATE NOTIFICATION FUNCTIONS =====
         function checkUpdate() {
             try {
@@ -1562,7 +1562,7 @@
                 status.innerHTML = 'Status: <span>User Admin</span>';
                 document.getElementById('adminPass').value = '';
                 showToast('Login admin berhasil!', 'success');
-                renderReviews(); // Re-render to show delete buttons
+                renderReviews();
                 setTimeout(toggleAdminPanel, 800);
             } else {
                 showToast('Password salah!', 'error');
@@ -1672,7 +1672,6 @@
             updateRatingSummary();
             updateToggleButton();
 
-            // Reset form
             document.getElementById('nameInput').value = '';
             document.getElementById('commentInput').value = '';
             setRating(0);
