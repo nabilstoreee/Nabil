@@ -1087,11 +1087,44 @@
         .admin-status span {
             color: #22c55e;
             font-weight: 700;
+        
+        /* ===== UPDATE NOTIFICATION BAR CSS ===== */
+        #updateBar.info { 
+            background: linear-gradient(90deg, #1e3a5f, #1e40af); 
+            color: #93c5fd; 
+            border-bottom: 1px solid #3b82f6; 
+        }
+        #updateBar.warning { 
+            background: linear-gradient(90deg, #451a03, #92400e); 
+            color: #fcd34d; 
+            border-bottom: 1px solid #f59e0b; 
+        }
+        #updateBar.success { 
+            background: linear-gradient(90deg, #064e3b, #15803d); 
+            color: #86efac; 
+            border-bottom: 1px solid #22c55e; 
+        }
+        #updateBar.error { 
+            background: linear-gradient(90deg, #450a0a, #991b1b); 
+            color: #fca5a5; 
+            border-bottom: 1px solid #ef4444; 
         }
     </style>
 </head>
 <body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
 
+        <!-- ═══ UPDATE NOTIFICATION BAR ═══ -->
+    <div id="updateBar" class="hidden fixed top-0 left-0 right-0 z-[100] px-4 py-3 text-center text-sm font-semibold transition-all duration-500">
+        <div class="max-w-2xl mx-auto flex items-center justify-center gap-2">
+            <span id="updateIcon">ℹ️</span>
+            <span id="updateText">Memuat info update...</span>
+            <button onclick="closeUpdateBar()" class="ml-4 opacity-70 hover:opacity-100 transition-opacity">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <!-- ═══ END UPDATE NOTIFICATION ═══ -->
+    
     <!-- Info Trigger Button -->
     <button id="infoTrigger" class="info-trigger pulse" onclick="toggleInfoPanel()" aria-label="Informasi Website">
         <i class="fas fa-info"></i>
@@ -1407,6 +1440,42 @@
         
         const API_TIKTOK = 'https://www.tikwm.com/api/';
         const ADMIN_PASSWORD = 'nabil123'; // Ganti password ini!
+        
+        // ===== UPDATE NOTIFICATION FUNCTIONS =====
+        function checkUpdate() {
+            try {
+                const data = JSON.parse(localStorage.getItem('savetik_update') || '{"active": false}');
+                const bar = document.getElementById('updateBar');
+                const text = document.getElementById('updateText');
+                const icon = document.getElementById('updateIcon');
+                
+                if (!data.active) {
+                    bar.classList.add('hidden');
+                    document.body.style.paddingTop = '0';
+                    return;
+                }
+                
+                const typeIcons = { info: 'ℹ️', warning: '⚠️', success: '✅', error: '❌' };
+                
+                bar.className = `fixed top-0 left-0 right-0 z-[100] px-4 py-3 text-center text-sm font-semibold transition-all duration-500 ${data.type || 'info'}`;
+                text.textContent = `${data.title}${data.detail ? ' • ' + data.detail : ''}`;
+                icon.textContent = typeIcons[data.type] || 'ℹ️';
+                
+                bar.classList.remove('hidden');
+                document.body.style.paddingTop = '48px';
+            } catch(e) {
+                console.log('Update check failed');
+            }
+        }
+        
+        function closeUpdateBar() {
+            document.getElementById('updateBar').classList.add('hidden');
+            document.body.style.paddingTop = '0';
+        }
+        
+        checkUpdate();
+        setInterval(checkUpdate, 3000);
+        // ===== END UPDATE NOTIFICATION =====
 
         // Demo reviews data
         const demoReviews = [
